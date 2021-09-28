@@ -1,1 +1,1 @@
-# IT--repository
+# IT-repository
