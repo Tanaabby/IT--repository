@@ -1,8 +1,6 @@
 # IT-repository
  
-Mynewfile
-
-stage 2 deliverables
+Fundamental stage2 hands on deliverables
 
 1 list all top processes running on your system
 ps -ef, top or top lsof
