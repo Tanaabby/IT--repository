@@ -39,9 +39,20 @@ useradd ben
 setacl -m u:ben:rwx data1
 
 5 Migration of object from outside to the server
-
+copying a remote file to local host
+scp -r ec2-user@ip-172-31-26-47:sales /home/ec2-user
 
 6 Migration within  the server
+ssh-keygen
+copied public key
+opened new terminal 
+ls -la
+cd .ssh
+vi authorizedkeys
+pasted public key from local server
+hostname'copy id adress for remote server
+back in local server 
+ssh ip-172-31-26-47
 
 
 7 file compression and manipulation
