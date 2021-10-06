@@ -1,0 +1,140 @@
+# IT-repository
+ 
+Mynewfile
+
+stage 2 deliverables
+
+1 list all top processes running on your system
+ps -ef, top or top lsof
+
+
+2 show system performance matrix
+
+
+3 list all fundamental linux directories
+/
+/etc
+/cdrom
+/dev
+/bin
+/home
+/boot
+
+
+4 create directories and manipulate the acl
+mkdir data1
+getfacl data1
+groupadd sales
+useradd -mG sales jen
+id-- im a root user at the moment
+chgrp sales data1- changed group ownership for data1 directory, owner remained as root
+getfacl data1
+
+groupadd finance 
+setfacl -m d:g:finance:rw data1
+getfacl data1.... now the group also has rw access to the data1 directory
+
+- adding a user and granting the user access to data1 directory
+useradd ben
+setacl -m u:ben:rwx data1
+
+5 Migration of object from outside to the server
+copying a remote file to local host
+scp -r ec2-user@ip-172-31-26-47:sales /home/ec2-user
+
+6 Migration within  the server
+ssh-keygen
+copied public key
+opened new terminal 
+ls -la
+cd .ssh
+vi authorizedkeys
+pasted public key from local server
+hostname'copy id adress for remote server
+back in local server 
+ssh ip-172-31-26-47
+
+
+7 file compression and manipulation
+vi planets
+- theres a list of planets :Earth, Mars, Venus, Uranus, Neptune
+:wq
+- gzip planets....compressed planets file
+
+
+8 File system operation like formatting and mounting
+created a volume in aws
+attached it
+touch  myusb
+sudo mount /dev/xvdf myusb
+sudo mkfs /dev/xvdf 
+ 
+
+
+
+
+FUNDAMENTAL STAGE 3 
+
+vi commands 
+w-save
+q-quit 
+:wq- save and quit 
+i-insert
+a - write after cusor
+i
+esc- escape mode
+U-undo all changes to a file 
+dd- delete a line 
+o - open a new file 
+
+operations related to setting environmental variables
+
+env
+echo $PATH
+.~/bash_profile
+echo $USER
+echo $HOME
+env
+NEWVARIABLE=value123
+echo $NEWVARIBLE
+
+deleting the variables
+unset NEWVARIABLE
+echo NEWVARIABLE
+export $HOME=/home/tana/sqlserver
+echo $SQLHOME
+cd SQLHOME
+
+creating and manipulating users
+sudo su -
+useradd jen
+adduser jen sudo
+userdel jen
+
+text operation commands 
+
+head -2 testfile
+tail -3 testfile 
+cat testfile testfile > testfile3
+cat testfile3 
+wc testfile3
+uniq -c testfile3
+sed s/is/are/g testfile3
+sort testfile3 |uniq
+cat testfile | tr a-z A-Z
+
+Basic operations with yum installation 
+yum check-upate
+yum list updates 
+yum update 
+yu list installed 
+yum install git 
+yum list git 
+
+command logging mechanism 
+cd /var/log
+ls -ltr
+less /var/log/syslog
+head /var/log/syslog
+tail -n 50 /var/log/syslog
+cat /var/log/syslog | grep apache2
