@@ -138,3 +138,6 @@ less /var/log/syslog
 head /var/log/syslog
 tail -n 50 /var/log/syslog
 cat /var/log/syslog | grep apache2
+
+deliverables
+setup git repository
