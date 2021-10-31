@@ -1,4 +1,5 @@
 #Getting Hands Dirty Assignment
+Stage1:
 
 Create a new user on your server with permission as a sudo user.
 Fork this repo to your organization https://github.com/tosesina/simple-ec2-cloudformation-template
@@ -9,3 +10,12 @@ Remove executable permission from the file for all users and group.
 Compress the whole directory of your repo with tar command
 
 
+Stage 2:
+#Do not Start Until Stage1 completed
+
+Below are the project outline:
+
+- Create EC2 instance in AWS
+- Create a 10GB ebs volume and attached to the instance
+- Create a filesystem of ext4 type with a single partition
+- Mount the volume to this location: /opt/anaconda
