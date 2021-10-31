@@ -1,0 +1,11 @@
+#Getting Hands Dirty Assignment
+
+Create a new user on your server with permission as a sudo user.
+Fork this repo to your organization https://github.com/tosesina/simple-ec2-cloudformation-template
+Clone the repo to the ec2 
+Create a copy of ec2.yml file from your clone repo
+Remove first 15 lines from the files
+Remove executable permission from the file for all users and group.
+Compress the whole directory of your repo with tar command
+
+
