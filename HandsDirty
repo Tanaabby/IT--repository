@@ -8,6 +8,7 @@ Create a copy of ec2.yml file from your clone repo
 Remove first 15 lines from the files
 Remove executable permission from the file for all users and group.
 Compress the whole directory of your repo with tar command
+Push the new tar file to your git repo
 
 
 Stage 2:
