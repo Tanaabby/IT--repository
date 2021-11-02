@@ -25,6 +25,8 @@ Below are the project outline:
 
 
 
+project deliverables 
+
 ASSIGNMENT STAGE1
 -creating a a new user
 [root@ip-172-31-85-174 ec2-user]# useradd Dave
