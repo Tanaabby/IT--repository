@@ -20,3 +20,171 @@ Below are the project outline:
 - Create a 10GB ebs volume and attached to the instance
 - Create a filesystem of ext4 type with a single partition
 - Mount the volume to this location: /opt/anaconda
+
+
+
+
+
+ASSIGNMENT STAGE1
+-creating a a new user
+[root@ip-172-31-85-174 ec2-user]# useradd Dave
+
+-giving user sudo permission
+8[root@ip-172-31-85-174 ec2-user]# su Dave
+
+forked repository from git 
+
+[ec2-user@ip-172-31-80-116 simple-ec2-cloudformation-template]$ ls -ltr
+total 12
+-rw-rw-r-- 1 ec2-user ec2-user  489 Nov  1 18:05 README.md
+-rw-rw-r-- 1 ec2-user ec2-user 4093 Nov  1 18:05 ec2.yml
+-rw-rw-r-- 1 ec2-user ec2-user  470 Nov  1 18:05 ec2-parameters.json
+
+counting lines of the file
+[ec2-user@ip-172-31-80-116 simple-ec2-cloudformation-template]$ wc -l  ec2.yml
+173 ec2.yml
+
+-creating a copy of ec2.yml file and deleting the first 15 lines of copy
+[ec2-user@ip-172-31-80-116 simple-ec2-cloudformation-template]$ sed '16,158!d' ec2.yml > ec2.yml.copy
+
+-checking to see if the file was created
+[ec2-user@ip-172-31-80-116 simple-ec2-cloudformation-template]$ ls -ltr
+total 16
+-rw-rw-r-- 1 ec2-user ec2-user  489 Nov  1 18:05 README.md
+-rw-rw-r-- 1 ec2-user ec2-user 4093 Nov  1 18:05 ec2.yml
+-rw-rw-r-- 1 ec2-user ec2-user  470 Nov  1 18:05 ec2-parameters.json
+-rw-rw-r-- 1 ec2-user ec2-user 3372 Nov  1 20:22 ec2.yml.copy
+
+
+-checking to see if the first 15 lines are gone 
+[ec2-user@ip-172-31-80-116 simple-ec2-cloudformation-template]$ head -20  ec2.yml.copy
+    AllowedPattern: "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{1,2})"
+  InstanceType:
+    Description: EC2 instance type
+    Type: String
+    Default: t2.medium
+    AllowedValues:
+    - t2.nano
+    - t2.micro
+    - t2.small
+    - t2.medium
+    - t2.large
+    - m4.large
+    - m4.xlarge
+    - m4.2xlarge
+    - m4.4xlarge
+    - m4.10xlarge
+    - m3.medium
+    - m3.large
+    - m3.xlarge
+    - m3.2xlarge
+
+commit changes
+[ec2-user@ip-172-31-80-116 simple-ec2-cloudformation-template]$ git commit -am "ec2.yml.copy"
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        ec2.yml.copy
+
+nothing added to commit but untracked files present (use "git add" to track)
+[ec2-user@ip-172-31-80-116 simple-ec2-cloudformation-template]$ git add  ec2.yml.copy
+
+
+
+compressing ec2.yml.copy file
+[ec2-user@ip-172-31-80-116 simple-ec2-cloudformation-template]$ tar -czvf ec2.yml.copytar ec2.yml.copy
+ec2.yml.copy
+[ec2-user@ip-172-31-80-116 simple-ec2-cloudformation-template]$ ls -ltr
+total 20
+-rw-rw-r-- 1 ec2-user ec2-user  489 Nov  1 18:05 README.md
+-rw-rw-r-- 1 ec2-user ec2-user 4093 Nov  1 18:05 ec2.yml
+-rw-rw-r-- 1 ec2-user ec2-user  470 Nov  1 18:05 ec2-parameters.json
+-rw-rw-r-- 1 ec2-user ec2-user 3372 Nov  1 20:22 ec2.yml.copy
+-rw-rw-r-- 1 ec2-user ec2-user 1173 Nov  1 20:53 ec2.yml.copytar
+
+removing executable permission from the file from all users and groups 
+[root@ip-172-31-80-116 simple-ec2-cloudformation-template]# chmod 744  ec2.yml.copytar
+
+
+[ec2-user@ip-172-31-80-116 simple-ec2-cloudformation-template]$ git push
+
+used access token key to push changes 
+
+
+ASSIGNMENT STAGE2 
+
+created an 	EC2 instance in AWS
+created a 10GB volume and atttached to instance 
+
+making the disk a filesystem
+
+[ec2-user@ip-172-31-83-75 ~]$ sudo mkfs -t ext2 /dev/xvdb
+mke2fs 1.42.9 (28-Dec-2013)
+Filesystem label=
+OS type: Linux
+Block size=4096 (log=2)
+Fragment size=4096 (log=2)
+Stride=0 blocks, Stripe width=0 blocks
+655360 inodes, 2621440 blocks
+131072 blocks (5.00%) reserved for the super user
+First data block=0
+Maximum filesystem blocks=2684354560
+80 block groups
+32768 blocks per group, 32768 fragments per group
+8192 inodes per group
+Superblock backups stored on blocks:
+        32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632
+
+Allocating group tables: done
+Writing inode tables: done
+Writing superblocks and filesystem accounting information: done
+
+creating the directory for mounting the disk  (/0pt/anaconda)
+[ec2-user@ip-172-31-83-75 ~]$ sudo mkdir /opt/anaconda
+
+mounting the disk 
+[ec2-user@ip-172-31-83-75 ~]$ sudo mount /dev/xvdb  /opt/anaconda
+
+[ec2-user@ip-172-31-83-75 ~]$ df -hT
+Filesystem     Type      Size  Used Avail Use% Mounted on
+devtmpfs       devtmpfs  482M     0  482M   0% /dev
+tmpfs          tmpfs     492M     0  492M   0% /dev/shm
+tmpfs          tmpfs     492M  460K  491M   1% /run
+tmpfs          tmpfs     492M     0  492M   0% /sys/fs/cgroup
+/dev/xvda1     xfs       8.0G  1.5G  6.6G  19% /
+tmpfs          tmpfs      99M     0   99M   0% /run/user/0
+tmpfs          tmpfs      99M     0   99M   0% /run/user/1000
+/dev/xvdb      ext2      9.9G   23M  9.4G   1% /opt/anaconda
+
+
+finding the UUIDs of the disk 
+[ec2-user@ip-172-31-83-75 ~]$ sudo blkid
+/dev/xvda1: LABEL="/" UUID="f22063bb-28ab-42bc-ba62-b9130b861ee7" TYPE="xfs" PARTLABEL="Linux" PARTUUID="4227ecc4-5e0f-412a-8115-254b51b96eb2"
+/dev/xvdb: UUID="b7e5c564-e0b4-46bd-be04-39378c685f17" TYPE="ext2"
+
+modifying /etc/fstab
+#
+UUID=f22063bb-28ab-42bc-ba662-b9130b861ee7     /           xfs   6 defaults,noatime  1   1
+/dev/xvdb  /opt/anaconda  ext2 defaults 0 2
+
+logged in to see if the modification in etc/fstab worked 
+[ec2-user@ip-172-31-83-75 ~]$ lsblk
+NAME    MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
+xvda    202:0    0   8G  0 disk
+└─xvda1 202:1    0   8G  0 part /
+xvdb    202:16   0  10G  0 disk /opt/anaconda
+
+unmounting the disk 
+[ec2-user@ip-172-31-83-75 ~]$ sudo umount /opt/anaconda
+
+-checking to see if the disk has been unmounted 
+[ec2-user@ip-172-31-83-75 ~]$ lsblk
+NAME    MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
+xvda    202:0    0   8G  0 disk
+└─xvda1 202:1    0   8G  0 part /
+xvdb    202:16   0  10G  0 disk
+[ec2-user@ip-172-31-83-75 ~]$
+
+
